@@ -24,8 +24,8 @@ public class Simulator {
 		String zoneArrayCenter[]={"Raffles Place","Chinatown","Queenstown","Keppel","Dover","City Hall","Bugis","Farrer Park","Orchard","Tanglin","Bukit Timah","Toa Payoh","Macpherson","Kembangan","Katong","Bayshore","Changi","Pasir Ris","Punggol","Bishan","Clementi","Boon Lay","Bukit Batok","Lim Chu Kang","Admiralty","Tagore","Sembawang","Seletar"
 };
 		ShortestDistanceStrategy sDs=new ShortestDistanceStrategy();
-		s.addRandomCarGenerater(sDs,5,4,1280, zoneArrayCenter);
-		s.addRandomCarGenerater(sDs,5,4,1120, zoneArrayCenter);
+		s.addRandomCarGenerater(sDs,5,2, 20, zoneArrayCenter);
+//		s.addRandomCarGenerater(sDs,5,4,1120, zoneArrayCenter);
 		s.draw();
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.geotools.data.FeatureReader;
@@ -112,7 +113,7 @@ public class CarProductionLine {
 //			Point source = CarFactory.randomPointWithinZone(stationZoneNoArray);
 			String destination;			
 			
-			File shpFile = new File("testtest.shp");
+			File shpFile = new File("PlanningAreaPopulation.shp");
 		    Map map = new HashedMap();
 		    ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
 		    ShapefileDataStoreFactory.ShpFileStoreFactory shpFileStoreFactory = new ShapefileDataStoreFactory.ShpFileStoreFactory(dataStoreFactory, map);
@@ -121,14 +122,72 @@ public class CarProductionLine {
 			try {
 				dataStore = (ShapefileDataStore)shpFileStoreFactory.getDataStore(shpFile);
 				FeatureReader<SimpleFeatureType,SimpleFeature> features = dataStore.getFeatureReader();
-		        SimpleFeature firstFeature = features.next();
+				
+		        int i = 0;
+		        String[][] shpdata = new String[55][3];
+		        int[] stuff = new int[55];
+		        while (features.hasNext()){
+		        	SimpleFeature nextFeature = features.next();
+
+		            shpdata[i][0]= nextFeature.getAttribute(1).toString();
+		            shpdata[i][1]= nextFeature.getAttribute(2).toString();
+		            shpdata[i][2]= nextFeature.getAttribute(3).toString();
+		 
+		            stuff[i] =  Integer.parseInt(shpdata[i][2]);
+		            i++;
+		            
+//		            System.out.println("id:" + shpdata[i][0]);
+//		            System.out.println("name:" + shpdata[i][1]);
+//		            System.out.println("population:" + shpdata[i][2]);
+		        }
+		        features.close();
+
+		        
+		     // Compute the total weight of all items together
+		        int totalWeight = 0;
+		        int selection = -1;
+		        for (int element : stuff)
+		        {
+		           totalWeight += element;
+		           
+		        }
+
+		        int position = new Random().nextInt(totalWeight);
+//		        System.out.println("totalweight:" + totalWeight);
+//		        System.out.println("position:" + position);
+		        int f = 0;
+		        for (int element : stuff)
+		        {
+//		        	System.out.println("element:" + element);
+		        	f++;
+		        	if (position < element)
+		        	{
+		        	  
+		               selection = f;
+		               break;
+		        	}
+		        	position -= element;
+		        }
+//		        System.out.println("selection:" + selection);
+		        
+		        
+		        FeatureReader<SimpleFeatureType,SimpleFeature> features1 = dataStore.getFeatureReader();
+		        SimpleFeature selectedFeature= features1.next();
+		        for (int j=1 ; j<selection ; j++) {
+		        	selectedFeature = features1.next();        	
+		        }         
+		        	
+//				System.out.println("id:" + selectedFeature.getAttribute(1));
+		    	System.out.println("name:" + selectedFeature.getAttribute(2));
+//		    	System.out.println("population:" + selectedFeature.getAttribute(3));
+		        features1.close();
 //		        System.out.println(firstFeature.getAttribute(0));
 		        GeometryFactory geometryFactory = (GeometryFactory) JTSFactoryFinder.getGeometryFactory( null );
 //		        Coordinate coord = new Coordinate( geo1.getLongitude(), geo1.getLatitude() );
 //		        com.vividsolutions.jts.geom.Point point = geometryFactory.createPoint(coord);
-		        Geometry g = (Geometry) firstFeature.getAttribute( "the_geom" );
+		        Geometry g = (Geometry) selectedFeature.getAttribute( "the_geom" );
 		        features.close();
-			    Envelope env = new Envelope(firstFeature.getBounds().getMinX(), firstFeature.getBounds().getMaxX(), firstFeature.getBounds().getMinY(), firstFeature.getBounds().getMaxY());
+			    Envelope env = new Envelope(selectedFeature.getBounds().getMinX(), selectedFeature.getBounds().getMaxX(), selectedFeature.getBounds().getMinY(), selectedFeature.getBounds().getMaxY());
 			    double x = env.getMinX() + env.getWidth() * Math.random();
 				double y = env.getMinY() + env.getHeight() * Math.random();
 				Coordinate pt = new Coordinate(x, y);
