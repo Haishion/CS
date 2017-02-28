@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="src/API LIST/curvesapi-1.03.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/graphhopper-web-0.5.0-with-dep.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/jxmapviewer2-2.0.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/okhttp-2.7.1.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/okio-1.4.0.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/poi-3.14-20160307.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/poi-excelant-3.14-20160307.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/poi-ooxml-3.14-20160307.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/poi-ooxml-schemas-3.14-20160307.jar"/>
+	<classpathentry kind="lib" path="src/API LIST/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EltonQ/Desktop/FYP/geotools-16.1-bin/geotools-16.1/gt-api-16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EltonQ/Desktop/FYP/geotools-16.1-bin/geotools-16.1/gt-main-16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EltonQ/Desktop/FYP/geotools-16.1-bin/geotools-16.1/gt-opengis-16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EltonQ/Desktop/FYP/geotools-16.1-bin/geotools-16.1/gt-shapefile-16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EltonQ/Desktop/FYP/geotools-16.1-bin/geotools-16.1/jts-1.13.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EltonQ/Desktop/FYP/geotools-16.1-bin/geotools-16.1/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
