@@ -301,7 +301,7 @@ public class Simulator extends JFrame {
 
 	
 
-		this.setTitle("Charging Staion Simulator"); // Display the viewer in a
+		this.setTitle("Charging Station Simulator"); // Display the viewer in a
 													// JFrame
 
 		// frame.getContentPane().add(mapViewer);

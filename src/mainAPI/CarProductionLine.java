@@ -114,6 +114,7 @@ public class CarProductionLine {
 			String destination;			
 			
 			File shpFile = new File("PlanningAreaPopulation.shp");
+			System.out.println("i opened the file here");
 		    Map map = new HashedMap();
 		    ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
 		    ShapefileDataStoreFactory.ShpFileStoreFactory shpFileStoreFactory = new ShapefileDataStoreFactory.ShpFileStoreFactory(dataStoreFactory, map);
@@ -197,36 +198,43 @@ public class CarProductionLine {
 				Point source = Simulator.geoToCor(y,x);
 //				System.out.println(x);
 //				System.out.println(y);
-//				System.out.println("HELLO!");
+				int tries = 0;
 				destination=strategy.chooseDestination(source);
-		        
-		        if(point1.isWithinDistance(g, 0)){
-		        	System.out.println("shiets man");
-					if(destination!=null)
-					{
-						error=false;
-						
-						//sDs.chooseDestination(source);
-						int x1 = (int) source.getX();
-						int y1 = (int) source.getY();
-						GeoPosition geo1 = Simulator.corToGeo(x1, y1);
-						Point des = Simulator.getStations().get(destination).getPoint();
-						
-						int chargingTime=strategy.setChargingTime(source);
-						int y2 = (int) des.getY();
-						int x2 = (int) des.getX();
 
-						
-						GeoPosition geo2 = Simulator.corToGeo(x2, y2);
-						
-						GHResponse res =Simulator.getRoute(geo1, geo2);
-						Car c = new Car(geo1.getLatitude(), geo1.getLongitude(), destination, generationTime, chargingTime);
-						c.saveRoute(res);
-						return c;
-					}
-		        } else {
-		        	System.out.println("gg");
-		        }
+		        while(tries<3){
+		        	if (point1.isWithinDistance(g, 0)){
+
+						if(destination!=null)
+						{
+							error=false;
+							
+							//sDs.chooseDestination(source);
+							int x1 = (int) source.getX();
+							int y1 = (int) source.getY();
+							GeoPosition geo1 = Simulator.corToGeo(x1, y1);
+							Point des = Simulator.getStations().get(destination).getPoint();
+							
+							int chargingTime=strategy.setChargingTime(source);
+							int y2 = (int) des.getY();
+							int x2 = (int) des.getX();
+	
+							
+							GeoPosition geo2 = Simulator.corToGeo(x2, y2);
+							
+							GHResponse res =Simulator.getRoute(geo1, geo2);
+							Car c = new Car(geo1.getLatitude(), geo1.getLongitude(), destination, generationTime, chargingTime);
+							c.saveRoute(res);
+							System.out.println("success");
+							return c;
+						}
+		        	}
+		        	tries++;
+		        	x = env.getMinX() + env.getWidth() * Math.random();
+					y = env.getMinY() + env.getHeight() * Math.random();
+					pt = new Coordinate(x, y);
+					point1 = geometryFactory.createPoint(pt);
+					source = Simulator.geoToCor(y,x);
+		        } 
 		        
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
