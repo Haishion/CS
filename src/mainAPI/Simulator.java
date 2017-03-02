@@ -23,6 +23,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
+import org.geotools.data.shapefile.ShapefileDataStore;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.painter.CompoundPainter;
@@ -710,11 +711,13 @@ public class Simulator extends JFrame {
 	 *            The total number of cars generated
 	 * @param zone
 	 *            Zone ID (station ID) Array selected to choose a random stations  
+	 * @param stuff 
+	 * @param dataStore 
 	 */
-	public void addRandomCarGenerater(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zone
+	public void addRandomCarGenerater(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zone, int[] stuff, ShapefileDataStore dataStore
 			) {
 		
-		CarFactory.addRandomCarProductionLine(s,producerSpeed, noOfCarsGenerated, expectedNo, zone);
+		CarFactory.addRandomCarProductionLine(s,producerSpeed, noOfCarsGenerated, expectedNo, zone , stuff , dataStore);
 	}
 
 	/**

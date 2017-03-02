@@ -4,6 +4,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
+import org.geotools.data.shapefile.ShapefileDataStore;
+
 import java.util.Map.Entry;
 
 /**
@@ -28,9 +31,9 @@ public class CarFactory {
 		CarProductionLine cPL = new CarProductionLine(producerSpeed, noOfCarsGenerated, expectedNo, latitude, longitude);
 		CarFactory.getpSArray().add(cPL);
 	}
-	public static void addRandomCarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zone)
+	public static void addRandomCarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zone, int[] stuff, ShapefileDataStore dataStore)
 	{
-		CarProductionLine cPL = new CarProductionLine(s,producerSpeed, noOfCarsGenerated, expectedNo, zone);
+		CarProductionLine cPL = new CarProductionLine(s,producerSpeed, noOfCarsGenerated, expectedNo, zone, stuff, dataStore);
 		CarFactory.getpSArray().add(cPL);
 	}
 			

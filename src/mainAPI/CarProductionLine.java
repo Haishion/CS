@@ -40,6 +40,9 @@ public class CarProductionLine {
 	final int RANDOMWITHSTRATEGY=2;
 	Strategy strategy;
 	int noWithinCircle;// when choose one pixel within a zone
+	int[] stuff;
+	ShapefileDataStore dataStore;
+	
 
 	public CarProductionLine(int producerSpeed, int noOfCarsGenerated, int expectedNo, double latitude,
 			double longitude) {
@@ -53,7 +56,7 @@ public class CarProductionLine {
 		this.type = FIXED;
 	}
 
-	public CarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zoneArray)
+	public CarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zoneArray, int[] stuff, ShapefileDataStore dataStore)
 	{
 		this.noOfCarsGenerated = noOfCarsGenerated;
 		this.lastGenerationTime = 0;
@@ -63,6 +66,8 @@ public class CarProductionLine {
 		this.type = RANDOM;
 		this.expectedNo = expectedNo;
 		this.strategy=s;
+		this.stuff = stuff;
+		this.dataStore = dataStore;
 	}
 
 	/**
@@ -113,37 +118,9 @@ public class CarProductionLine {
 //			Point source = CarFactory.randomPointWithinZone(stationZoneNoArray);
 			String destination;			
 			
-			File shpFile = new File("PlanningAreaPopulation.shp");
-			System.out.println("i opened the file here");
-		    Map map = new HashedMap();
-		    ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
-		    ShapefileDataStoreFactory.ShpFileStoreFactory shpFileStoreFactory = new ShapefileDataStoreFactory.ShpFileStoreFactory(dataStoreFactory, map);
-
-	        ShapefileDataStore dataStore;
+			
 			try {
-				dataStore = (ShapefileDataStore)shpFileStoreFactory.getDataStore(shpFile);
-				FeatureReader<SimpleFeatureType,SimpleFeature> features = dataStore.getFeatureReader();
-				
-		        int i = 0;
-		        String[][] shpdata = new String[55][3];
-		        int[] stuff = new int[55];
-		        while (features.hasNext()){
-		        	SimpleFeature nextFeature = features.next();
-
-		            shpdata[i][0]= nextFeature.getAttribute(1).toString();
-		            shpdata[i][1]= nextFeature.getAttribute(2).toString();
-		            shpdata[i][2]= nextFeature.getAttribute(3).toString();
-		 
-		            stuff[i] =  Integer.parseInt(shpdata[i][2]);
-		            i++;
-		            
-//		            System.out.println("id:" + shpdata[i][0]);
-//		            System.out.println("name:" + shpdata[i][1]);
-//		            System.out.println("population:" + shpdata[i][2]);
-		        }
-		        features.close();
-
-		        
+						        
 		     // Compute the total weight of all items together
 		        int totalWeight = 0;
 		        int selection = -1;
@@ -187,7 +164,7 @@ public class CarProductionLine {
 //		        Coordinate coord = new Coordinate( geo1.getLongitude(), geo1.getLatitude() );
 //		        com.vividsolutions.jts.geom.Point point = geometryFactory.createPoint(coord);
 		        Geometry g = (Geometry) selectedFeature.getAttribute( "the_geom" );
-		        features.close();
+
 			    Envelope env = new Envelope(selectedFeature.getBounds().getMinX(), selectedFeature.getBounds().getMaxX(), selectedFeature.getBounds().getMinY(), selectedFeature.getBounds().getMaxY());
 			    double x = env.getMinX() + env.getWidth() * Math.random();
 				double y = env.getMinY() + env.getHeight() * Math.random();
@@ -201,7 +178,7 @@ public class CarProductionLine {
 				int tries = 0;
 				destination=strategy.chooseDestination(source);
 
-		        while(tries<3){
+		        while(tries<5){
 		        	if (point1.isWithinDistance(g, 0)){
 
 						if(destination!=null)

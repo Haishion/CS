@@ -1,32 +1,79 @@
 package main;
+import java.io.File;
 import java.io.IOException;
-import java.util.Random;
-
+import java.util.Map;
 import javax.swing.JFrame;
+
+import org.apache.commons.collections.map.HashedMap;
+import org.geotools.data.FeatureReader;
+import org.geotools.data.shapefile.ShapefileDataStore;
+import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 
 import mainAPI.ReadExcelFile;
 public class Simulator {
 	public static void main(String[] args) {
-		double latitude=1.3355762066278836;
-		double longitude=103.85393142700195;
-		int zoomLevel=6;
-		mainAPI.Simulator s= new mainAPI.Simulator(latitude,longitude ,zoomLevel);
-		s.setSize(1024 + 200, 768);
-		s.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		s.setVisible(true);
-		s.setTimeMapping(1,900);//1min=20miliseconds
+		double latitude=1.34982018;
+		double longitude=103.80929946;
+		int zoomLevel=7;
+		mainAPI.Simulator frame= new mainAPI.Simulator(latitude,longitude ,zoomLevel);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		frame.setTimeMapping(1,900);//1min=20miliseconds
 		//https://mapzen.com/data/metro-extracts can get OSM data here, noted: first time using the OSM file it needs more time for extracting the map data
 		
-		s.setMapOSM("import\\mapData"+"\\"+"singapore.osm");
-		s.integrateTraffic("import\\trafficData.json");
+		frame.setMapOSM("import\\mapData"+"\\"+"singapore.osm");
+		frame.integrateTraffic("import\\trafficData.json");
 		
-		s.setStations("import\\s.xlsx");
+		frame.setStations("import\\s.xlsx");
 		String zoneArrayCenter[]={"Raffles Place","Chinatown","Queenstown","Keppel","Dover","City Hall","Bugis","Farrer Park","Orchard","Tanglin","Bukit Timah","Toa Payoh","Macpherson","Kembangan","Katong","Bayshore","Changi","Pasir Ris","Punggol","Bishan","Clementi","Boon Lay","Bukit Batok","Lim Chu Kang","Admiralty","Tagore","Sembawang","Seletar"
 };
 		ShortestDistanceStrategy sDs=new ShortestDistanceStrategy();
-		s.addRandomCarGenerater(sDs,5,10, 100, zoneArrayCenter);
+		
+		
+		File shpFile = new File("PlanningAreaPopulation.shp");
+
+	    Map map = new HashedMap();
+	    ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
+	    ShapefileDataStoreFactory.ShpFileStoreFactory shpFileStoreFactory = new ShapefileDataStoreFactory.ShpFileStoreFactory(dataStoreFactory, map);
+
+        ShapefileDataStore dataStore = null;
+        int[] stuff = new int[55];
+		try {
+			dataStore = (ShapefileDataStore)shpFileStoreFactory.getDataStore(shpFile);
+			FeatureReader<SimpleFeatureType,SimpleFeature> features = dataStore.getFeatureReader();
+			
+	        int i = 0;
+	        String[][] shpdata = new String[55][3];
+	        
+	        while (features.hasNext()){
+	        	SimpleFeature nextFeature = features.next();
+
+	            shpdata[i][0]= nextFeature.getAttribute(1).toString();
+	            shpdata[i][1]= nextFeature.getAttribute(2).toString();
+	            shpdata[i][2]= nextFeature.getAttribute(3).toString();
+	 
+	            stuff[i] =  Integer.parseInt(shpdata[i][2]);
+	            i++;
+	            
+//	            System.out.println("id:" + shpdata[i][0]);
+//	            System.out.println("name:" + shpdata[i][1]);
+//	            System.out.println("population:" + shpdata[i][2]);
+	        }
+	        features.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}     
+		
+		
+		
+		frame.addRandomCarGenerater(sDs,5, 20, 200, zoneArrayCenter , stuff , dataStore);
 //		s.addRandomCarGenerater(sDs,5,4,1120, zoneArrayCenter);
-		s.draw();
+		frame.draw();
 	}
 }
 
