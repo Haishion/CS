@@ -433,8 +433,8 @@ public class Simulator extends JFrame {
 		}
 		routePainter = new RoutePainter();
 
-		TrafficUpdater tU = new TrafficUpdater(hopper, traffic_file_name);
-		tU.updateTrafficInformation();
+//		TrafficUpdater tU = new TrafficUpdater(hopper, traffic_file_name);
+//		tU.updateTrafficInformation();
 
 		// mapViewer.add(sp.getButton());
 		painters.add(routePainter);

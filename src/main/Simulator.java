@@ -26,7 +26,7 @@ public class Simulator {
 		//https://mapzen.com/data/metro-extracts can get OSM data here, noted: first time using the OSM file it needs more time for extracting the map data
 		
 		frame.setMapOSM("import\\mapData"+"\\"+"singapore.osm");
-		frame.integrateTraffic("import\\trafficData.json");
+//		frame.integrateTraffic("import\\trafficData.json");
 		
 		frame.setStations("import\\s.xlsx");
 		String zoneArrayCenter[]={"Raffles Place","Chinatown","Queenstown","Keppel","Dover","City Hall","Bugis","Farrer Park","Orchard","Tanglin","Bukit Timah","Toa Payoh","Macpherson","Kembangan","Katong","Bayshore","Changi","Pasir Ris","Punggol","Bishan","Clementi","Boon Lay","Bukit Batok","Lim Chu Kang","Admiralty","Tagore","Sembawang","Seletar"
