@@ -181,6 +181,7 @@ public class Car {
 	 */
 	public void saveRoute(GHResponse res)
 	{
+	
 		carRoute = res.getPoints();
 		long millis = res.getTime();
 		movingTime = millis / 1000 / 60;

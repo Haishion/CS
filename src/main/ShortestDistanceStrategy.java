@@ -16,53 +16,63 @@ public class ShortestDistanceStrategy extends Strategy {
 	}
 
 	public String chooseDestination(Point generationPoint){
-		String zoneID=super.getZoneID(generationPoint);
-		int carNo=super.getCarNo(zoneID);//real time car number within the zone
-//		System.out.println("Zone ID "+ super.getZoneID(generationPoint)+" Car No "+carNo);
 		GHResponse shortestDistanceRes=null;
 		String selectedStation=null;
-//		String[] closestTwo = new String[2];
-//		int[] closestTwoDistance = new int[2]; 
-//		for (String station : Simulator.getStations().keySet()) {
-////			find the 2 closest stations
-//			Point des = Simulator.getStations().get(station).getPoint();
-//			int y2 = (int) des.getY();
-//			int x2 = (int) des.getX();
-//			int x1 = (int) generationPoint.getX();
-//			int y1 = (int) generationPoint.getY();
-//			int distance = Math.abs(x1-x2) + Math.abs(y1-y2); 
-//			if (closestTwoDistance == null){
-//				
-//			}
-//		}
-		for (String myVal : Simulator.getStations().keySet()) {
-//			for the 2 closest stations
-			GHResponse res=super.getInfomration(generationPoint, myVal);
-			if(res==null)
-			{
-				
-			}
-			else if(shortestDistanceRes==null)
-			{
-				double averageCapacity=super.getRouteCapacity(res);
-				shortestDistanceRes=res;
-				selectedStation=myVal;
-				continue;
-			}
-			else
-			{
-				double averageCapacity=super.getRouteCapacity(res);
-//				System.out.println(averageCapacity);
+		
+		String[] closestTwo = {"",""};
+		int[] closestTwoDistance = {9999,9999}; 
+		for (String station : Simulator.getStations().keySet()) {
+//			find the 2 closest stations
+			Point des = Simulator.getStations().get(station).getPoint();
+			int y2 = (int) des.getY();
+			int x2 = (int) des.getX();
+			int x1 = (int) generationPoint.getX();
+			int y1 = (int) generationPoint.getY();
+			int distance = Math.abs(x1-x2) + Math.abs(y1-y2); 
 
-				if(res.getDistance()<shortestDistanceRes.getDistance())
+			if (distance <= closestTwoDistance[0]){
+
+				closestTwoDistance[1] = closestTwoDistance[0];
+				closestTwo[1] = closestTwo[0];
+				closestTwoDistance[0] = distance;
+				closestTwo[0] = station;
+			} else if (distance <= closestTwoDistance[1]) {
+
+				closestTwoDistance[1] = distance;
+				closestTwo[1] = station;
+			}
+		}
+		
+//		int tries = 0;
+		for (String myVal : Simulator.getStations().keySet()) {
+			// for the two closest stations only
+			if (myVal == closestTwo[0] || myVal == closestTwo[1]){
+//				tries++;
+//				System.out.println("i run through this part " + tries + " times!"); // somehow the result is always only 1 time =((
+//				System.out.println(myVal);
+				GHResponse res=super.getInformation(generationPoint, myVal);
+				if(res==null)
+				{
+					
+				}
+				else if(shortestDistanceRes==null)
 				{
 					shortestDistanceRes=res;
 					selectedStation=myVal;
+					continue;
 				}
-			}
-		}
-		return selectedStation;
-		
-	}
+				else
+				{
+					if(res.getDistance()<shortestDistanceRes.getDistance())
+					{
+						shortestDistanceRes=res;
+						selectedStation=myVal;
+					}
+				}
 
+			}
+
+		}
+		return selectedStation;		
+	}
 }

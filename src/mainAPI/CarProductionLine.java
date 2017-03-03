@@ -156,7 +156,7 @@ public class CarProductionLine {
 		        }         
 		        	
 //				System.out.println("id:" + selectedFeature.getAttribute(1));
-		    	System.out.println("name:" + selectedFeature.getAttribute(2));
+//		    	System.out.println("name:" + selectedFeature.getAttribute(2));
 //		    	System.out.println("population:" + selectedFeature.getAttribute(3));
 		        features1.close();
 //		        System.out.println(firstFeature.getAttribute(0));
@@ -198,11 +198,14 @@ public class CarProductionLine {
 							
 							GeoPosition geo2 = Simulator.corToGeo(x2, y2);
 							
-							GHResponse res =Simulator.getRoute(geo1, geo2);
-							Car c = new Car(geo1.getLatitude(), geo1.getLongitude(), destination, generationTime, chargingTime);
-							c.saveRoute(res);
-							System.out.println("success");
-							return c;
+							GHResponse res = Simulator.getRoute(geo1, geo2);
+							if (res != null){
+								Car c = new Car(geo1.getLatitude(), geo1.getLongitude(), destination, generationTime, chargingTime);
+								c.saveRoute(res);
+	//							System.out.println("success");
+								return c;
+							}
+							
 						}
 		        	}
 		        	tries++;

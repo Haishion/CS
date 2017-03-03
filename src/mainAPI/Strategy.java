@@ -108,7 +108,7 @@ public abstract class Strategy {
 	 * @param chargingStation ID of charging station
 	 * @return GHResponse Graphhoper API
 	 */
-	public GHResponse getInfomration(Point generationPoint,String chargingStation)
+	public GHResponse getInformation(Point generationPoint,String chargingStation)
 	{
 		Point des = Simulator.getStations().get(chargingStation).getPoint();
 

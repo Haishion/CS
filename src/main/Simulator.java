@@ -71,7 +71,7 @@ public class Simulator {
 		
 		
 		
-		frame.addRandomCarGenerater(sDs,5, 20, 200, zoneArrayCenter , stuff , dataStore);
+		frame.addRandomCarGenerater(sDs,5, 200, 1000, zoneArrayCenter , stuff , dataStore);
 //		s.addRandomCarGenerater(sDs,5,4,1120, zoneArrayCenter);
 		frame.draw();
 	}
