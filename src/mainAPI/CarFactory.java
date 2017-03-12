@@ -31,9 +31,9 @@ public class CarFactory {
 		CarProductionLine cPL = new CarProductionLine(producerSpeed, noOfCarsGenerated, expectedNo, latitude, longitude);
 		CarFactory.getpSArray().add(cPL);
 	}
-	public static void addRandomCarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zone, int[] stuff, ShapefileDataStore dataStore)
+	public static void addRandomCarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, int[] stuff, ShapefileDataStore dataStore)
 	{
-		CarProductionLine cPL = new CarProductionLine(s,producerSpeed, noOfCarsGenerated, expectedNo, zone, stuff, dataStore);
+		CarProductionLine cPL = new CarProductionLine(s,producerSpeed, noOfCarsGenerated, expectedNo, stuff, dataStore);
 		CarFactory.getpSArray().add(cPL);
 	}
 			

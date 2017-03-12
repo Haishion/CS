@@ -122,7 +122,7 @@ public abstract class Strategy {
 
 		GHResponse res =Simulator.getRoute(geo1, geo2);
 		if (res == null) {
-			System.out.println("Strategy Class: Return null res!Destination Station is "+chargingStation+" Generation Point is "+geo1);
+//			System.out.println("Strategy Class: Return null res!Destination Station is "+chargingStation+" Generation Point is "+geo1);
 			return null;
 		} else {
 			return res;

@@ -76,6 +76,15 @@ public class Simulator extends JFrame {
 	public static final Color colorLevel3 = new Color(153,154,205);
 	public static final Color colorLevel2 = new Color(95,163,221);
 	public static final Color colorLevel1 = new Color(92,213,116);
+	
+	public static Strategy strategy;
+	public static int producerSpeed;
+	public static int noOfCarsGenerated;
+	public static int expectedNo;
+	public static int[] areaArray;
+	public static ShapefileDataStore dataStore;
+	static boolean firstTime = true;
+
 	/**
 	 * Get the current number of cars generated
 	 * @return number of cars generated
@@ -274,7 +283,7 @@ public class Simulator extends JFrame {
 	 *            the zoom level of map (0-19 the smaller, the nearer, proper
 	 *            value is 6)
 	 */
-	public Simulator(double latitude, double longtitude, int zoomLevel) {
+	public Simulator(double latitude, double longtitude, int zoomLevel, Strategy s, int[] areaArray, ShapefileDataStore dataStore) {
 
 		// popupstaionPanel
 		popUpStationPanel = new ArrayList<PopUpPanel>();
@@ -323,6 +332,10 @@ public class Simulator extends JFrame {
 		report = new Report();
 		SettingPanel.disableStartSimulatorbtn();
 		SettingPanel.disablePausebtn();
+		
+		this.strategy = s;
+		this.areaArray = areaArray;
+		this.dataStore= dataStore;
 
 	}
 
@@ -343,21 +356,21 @@ public class Simulator extends JFrame {
 		while (it.hasNext()) {
 			Entry<String, StationPoint> pair = it.next();
 			// System.out.println(pair.getKey() + " = " + pair.getValue());
-			StationPoint s = (StationPoint) pair.getValue();
-			if (!s.isEnd())//car will be charged
+			StationPoint stationpoint = (StationPoint) pair.getValue();
+			if (!stationpoint.isEnd())//car will be charged
 			{
 				isEnd = false;
-				s.updateBQ();
-				s.checkReachStation();
-				s.checkChargingComplete();
-				s.processCharging();
+				stationpoint.updateBQ();
+				stationpoint.checkReachStation();
+				stationpoint.checkChargingComplete();
+				stationpoint.processCharging();
 				
 				//all the cars have been generated, check if the station is end or not
 				if (!production) {
-					s.runningEnd();
+//					stationpoint.runningEnd();
 				}
-				s.updateWQLTOLE();
-				s.updateChargingTime();
+				stationpoint.updateWQLTOLE();
+				stationpoint.updateChargingTime();
 
 			}
 
@@ -380,6 +393,7 @@ public class Simulator extends JFrame {
 			SettingPanel.enableReportbtn();
 			SettingPanel.disablePausebtn();
 			Timer.setStatus(false);
+			System.out.println("The Simulation has ended");
 		}
 	}
 
@@ -714,24 +728,28 @@ public class Simulator extends JFrame {
 	 * @param stuff 
 	 * @param dataStore 
 	 */
-	public void addRandomCarGenerater(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zone, int[] stuff, ShapefileDataStore dataStore
-			) {
-		
-		CarFactory.addRandomCarProductionLine(s,producerSpeed, noOfCarsGenerated, expectedNo, zone , stuff , dataStore);
+	public static void addRandomCarGenerater() {
+		CarFactory.addRandomCarProductionLine(strategy, SettingPanel.getGenTimeNo(), SettingPanel.getGenCarNo(), SettingPanel.getTotalCarsNo(), areaArray , dataStore);
 	}
 
 	/**
 	 * Start to run the simulator
 	 */
 	public static void startSimulator() {
-
-
-		zoneDivision = true;
-		painters.remove(zonePainter);
 		
-		generateZone();
-		// Start the simulator
-		AnimationTimer.start();
+		if (firstTime){
+			firstTime = false;
+			addRandomCarGenerater();
+			zoneDivision = true;
+			painters.remove(zonePainter);
+			
+			generateZone();
+			// Start the simulator
+			AnimationTimer.start();
+		} else {
+			AnimationTimer.start();
+		}
+		
 
 	}
 

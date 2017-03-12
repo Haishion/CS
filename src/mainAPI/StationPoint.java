@@ -247,12 +247,12 @@ public class StationPoint extends DefaultWaypoint {
 			System.out.println("*Waiting Queue Size is" + waitingQueue.size());
 			// Report.saveStationData(this);
 			chargingCarNo = -1;
-			for (int i = 0; i < qt.size(); i++) {
-				int time = qt.get(i).getTime();
-				int queueLen = qt.get(i).getQueueLength();
-				System.out.println("Time is " + time + " QueueLen is " + queueLen);
-
-			}
+//			for (int i = 0; i < qt.size(); i++) {
+//				int time = qt.get(i).getTime();
+//				int queueLen = qt.get(i).getQueueLength();
+//				System.out.println("Time is " + time + " QueueLen is " + queueLen);
+//
+//			}
 		}
 	}
 

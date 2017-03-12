@@ -14,10 +14,46 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import mainAPI.ReadExcelFile;
 public class Simulator {
 	public static void main(String[] args) {
+		
 		double latitude=1.34982018;
 		double longitude=103.80929946;
 		int zoomLevel=7;
-		mainAPI.Simulator frame= new mainAPI.Simulator(latitude,longitude ,zoomLevel);
+		
+		
+		ShortestDistanceStrategy sDs=new ShortestDistanceStrategy();
+		
+		//shpfile is loaded in here
+		File shpFile = new File("PlanningAreaPopulation.shp");
+	    Map map = new HashedMap();
+	    ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
+	    ShapefileDataStoreFactory.ShpFileStoreFactory shpFileStoreFactory = new ShapefileDataStoreFactory.ShpFileStoreFactory(dataStoreFactory, map);
+        ShapefileDataStore dataStore = null;
+        int[] areaArray = new int[55];
+		try {
+			dataStore = (ShapefileDataStore)shpFileStoreFactory.getDataStore(shpFile);
+			FeatureReader<SimpleFeatureType,SimpleFeature> features = dataStore.getFeatureReader();
+			
+	        int i = 0;
+	        String[][] shpdata = new String[55][3];
+	        //inserting feature information into an array to use for randomisation
+	        while (features.hasNext()){
+	        	SimpleFeature nextFeature = features.next();
+
+	            shpdata[i][0]= nextFeature.getAttribute(1).toString();
+	            shpdata[i][1]= nextFeature.getAttribute(2).toString();
+	            shpdata[i][2]= nextFeature.getAttribute(3).toString();
+	 
+	            areaArray[i] =  Integer.parseInt(shpdata[i][2]);
+	            i++;
+	        }
+	        features.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}     
+		
+		
+		mainAPI.Simulator frame= new mainAPI.Simulator(latitude,longitude ,zoomLevel, sDs, areaArray , dataStore);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,49 +65,13 @@ public class Simulator {
 //		frame.integrateTraffic("import\\trafficData.json");
 		
 		frame.setStations("import\\s.xlsx");
-		String zoneArrayCenter[]={"Raffles Place","Chinatown","Queenstown","Keppel","Dover","City Hall","Bugis","Farrer Park","Orchard","Tanglin","Bukit Timah","Toa Payoh","Macpherson","Kembangan","Katong","Bayshore","Changi","Pasir Ris","Punggol","Bishan","Clementi","Boon Lay","Bukit Batok","Lim Chu Kang","Admiralty","Tagore","Sembawang","Seletar"
-};
-		ShortestDistanceStrategy sDs=new ShortestDistanceStrategy();
-		
-		
-		File shpFile = new File("PlanningAreaPopulation.shp");
-
-	    Map map = new HashedMap();
-	    ShapefileDataStoreFactory dataStoreFactory = new ShapefileDataStoreFactory();
-	    ShapefileDataStoreFactory.ShpFileStoreFactory shpFileStoreFactory = new ShapefileDataStoreFactory.ShpFileStoreFactory(dataStoreFactory, map);
-
-        ShapefileDataStore dataStore = null;
-        int[] stuff = new int[55];
-		try {
-			dataStore = (ShapefileDataStore)shpFileStoreFactory.getDataStore(shpFile);
-			FeatureReader<SimpleFeatureType,SimpleFeature> features = dataStore.getFeatureReader();
-			
-	        int i = 0;
-	        String[][] shpdata = new String[55][3];
-	        
-	        while (features.hasNext()){
-	        	SimpleFeature nextFeature = features.next();
-
-	            shpdata[i][0]= nextFeature.getAttribute(1).toString();
-	            shpdata[i][1]= nextFeature.getAttribute(2).toString();
-	            shpdata[i][2]= nextFeature.getAttribute(3).toString();
-	 
-	            stuff[i] =  Integer.parseInt(shpdata[i][2]);
-	            i++;
-	            
-//	            System.out.println("id:" + shpdata[i][0]);
-//	            System.out.println("name:" + shpdata[i][1]);
-//	            System.out.println("population:" + shpdata[i][2]);
-	        }
-	        features.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}     
+//		String zoneArrayCenter[]={"Raffles Place","Chinatown","Queenstown","Keppel","Dover","City Hall","Bugis","Farrer Park","Orchard","Tanglin","Bukit Timah","Toa Payoh","Macpherson","Kembangan","Katong","Bayshore","Changi","Pasir Ris","Punggol","Bishan","Clementi","Boon Lay","Bukit Batok","Lim Chu Kang","Admiralty","Tagore","Sembawang","Seletar"
+//};
 		
 		
 		
-		frame.addRandomCarGenerater(sDs,5, 200, 1000, zoneArrayCenter , stuff , dataStore);
+		
+//		frame.addRandomCarGenerater(sDs,5, 200, 1000, stuff , dataStore);
 //		s.addRandomCarGenerater(sDs,5,4,1120, zoneArrayCenter);
 		frame.draw();
 	}

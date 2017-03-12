@@ -24,6 +24,10 @@ public class SettingPanel extends JPanel{
 	private static JTextField speedtxt = new JTextField("");
 	private static JTextField staionCapacity = new JTextField("10");
 	private static JTextField longitudetxt = new JTextField("103.8");
+	private static JTextField latitudetxt = new JTextField("1.3667");
+	private static JTextField totalCarsNo = new JTextField("1000");
+	private static JTextField genTimeNo = new JTextField("5");
+	private static JTextField genCarNo = new JTextField("50");
 	private static JButton reportbtn;
 	private static JButton startSimulatorbtn;
 	private static JButton pauseSimulatorbtn;
@@ -56,8 +60,17 @@ public class SettingPanel extends JPanel{
 	public static JTextField getLatitudetxt() {
 		return latitudetxt;
 	}
+	public static int getGenTimeNo() {		
+		return Integer.parseInt(genTimeNo.getText());
+	}
+	public static int getGenCarNo() {
+		return Integer.parseInt(genCarNo.getText());
+	}
+	public static int getTotalCarsNo() {
+		return Integer.parseInt(totalCarsNo.getText());
+	}
 
-	private static JTextField latitudetxt = new JTextField("1.3667");
+	
 
 
 		public SettingPanel() {
@@ -67,59 +80,90 @@ public class SettingPanel extends JPanel{
 			setPreferredSize(new Dimension(220, 768));
 
 			setLayout(new GridLayout(4, 1, 0, 0));
-			JPanel defaultColorRect = new JPanel();
-			JPanel exploredColorRect = new JPanel();
-			JPanel obstaclesColorRect = new JPanel();
-			JPanel obstaclesDetectedColorRect = new JPanel();
-			JPanel obstaclesDetectedColorRectE = new JPanel();
-			JPanel obstaclesDetectedColorRectF= new JPanel();
+//			JPanel defaultColorRect = new JPanel();
+//			JPanel exploredColorRect = new JPanel();
+//			JPanel obstaclesColorRect = new JPanel();
+//			JPanel obstaclesDetectedColorRect = new JPanel();
+//			JPanel obstaclesDetectedColorRectE = new JPanel();
+//			JPanel obstaclesDetectedColorRectF= new JPanel();
 
-			JLabel defaultLabel = new JLabel("A");
-			defaultLabel.setFont(fontValue);
-			JLabel exploredLabel = new JLabel("B");
-			exploredLabel.setFont(fontValue);
-			JLabel obstaclesLabel = new JLabel("C");
-			obstaclesLabel.setFont(fontValue);
-			JLabel obstaclesDetectedLabel = new JLabel("D");
-			obstaclesDetectedLabel.setFont(fontValue);
-			JLabel obstaclesDetectedLabelE = new JLabel("E");
-			obstaclesDetectedLabelE.setFont(fontValue);
-			JLabel obstaclesDetectedLabelF = new JLabel("F");
-			obstaclesDetectedLabelF.setFont(fontValue);
-			
-			defaultColorRect.setBackground(Simulator.colorLevel1);
-			exploredColorRect.setBackground(Simulator.colorLevel2);
-			obstaclesColorRect.setBackground(Simulator.colorLevel3);
-			obstaclesDetectedColorRect.setBackground(Simulator.colorLevel4);
-			obstaclesDetectedColorRectE.setBackground(Simulator.colorLevel5);
-			obstaclesDetectedColorRectF.setBackground(Simulator.colorLevel6);
+//			JLabel defaultLabel = new JLabel("A");
+//			defaultLabel.setFont(fontValue);
+//			JLabel exploredLabel = new JLabel("B");
+//			exploredLabel.setFont(fontValue);
+//			JLabel obstaclesLabel = new JLabel("C");
+//			obstaclesLabel.setFont(fontValue);
+//			JLabel obstaclesDetectedLabel = new JLabel("D");
+//			obstaclesDetectedLabel.setFont(fontValue);
+//			JLabel obstaclesDetectedLabelE = new JLabel("E");
+//			obstaclesDetectedLabelE.setFont(fontValue);
+//			JLabel obstaclesDetectedLabelF = new JLabel("F");
+//			obstaclesDetectedLabelF.setFont(fontValue);
+//			
+//			defaultColorRect.setBackground(Simulator.colorLevel1);
+//			exploredColorRect.setBackground(Simulator.colorLevel2);
+//			obstaclesColorRect.setBackground(Simulator.colorLevel3);
+//			obstaclesDetectedColorRect.setBackground(Simulator.colorLevel4);
+//			obstaclesDetectedColorRectE.setBackground(Simulator.colorLevel5);
+//			obstaclesDetectedColorRectF.setBackground(Simulator.colorLevel6);
+//
+//			JPanel legendPanel = new JPanel();
+//			legendPanel.setLayout(new GridLayout(8, 2, 1, 1));
+//			JLabel legendTitle = new JLabel("Traffic");
+//			legendTitle.setFont(fontTitle);
+//			legendPanel.add(legendTitle);
+//			legendPanel.add(new JLabel(" "));
+//			legendPanel.add(defaultLabel);
+//			legendPanel.add(defaultColorRect);
+//			
+//			legendPanel.add(exploredLabel);
+//			legendPanel.add(exploredColorRect);
+//			
+//			legendPanel.add(obstaclesLabel);
+//			legendPanel.add(obstaclesColorRect);
+//			
+//			legendPanel.add(obstaclesDetectedLabel);
+//			legendPanel.add(obstaclesDetectedColorRect);
+//			
+//			legendPanel.add(obstaclesDetectedLabelE);
+//			legendPanel.add(obstaclesDetectedColorRectE);
+//			
+//			legendPanel.add(obstaclesDetectedLabelF);
+//			legendPanel.add(obstaclesDetectedColorRectF);
+//
+//			add(legendPanel);
 
-			JPanel legendPanel = new JPanel();
-			legendPanel.setLayout(new GridLayout(8, 2, 1, 1));
-			JLabel legendTitle = new JLabel("Traffic");
-			legendTitle.setFont(fontTitle);
-			legendPanel.add(legendTitle);
-			legendPanel.add(new JLabel(" "));
-			legendPanel.add(defaultLabel);
-			legendPanel.add(defaultColorRect);
+			//User Input
+			JPanel inputPane = new JPanel();
+			JLabel inputTitle = new JLabel("User Input");
+			JLabel totalCars = new JLabel("Total no. of cars to generate:");
+			JLabel genTime = new JLabel("Car generation interval (min):");
+			JLabel genCar = new JLabel("Cars generated per interval:");
 			
-			legendPanel.add(exploredLabel);
-			legendPanel.add(exploredColorRect);
 			
-			legendPanel.add(obstaclesLabel);
-			legendPanel.add(obstaclesColorRect);
-			
-			legendPanel.add(obstaclesDetectedLabel);
-			legendPanel.add(obstaclesDetectedColorRect);
-			
-			legendPanel.add(obstaclesDetectedLabelE);
-			legendPanel.add(obstaclesDetectedColorRectE);
-			
-			legendPanel.add(obstaclesDetectedLabelF);
-			legendPanel.add(obstaclesDetectedColorRectF);
 
-			add(legendPanel);
+			inputTitle.setFont(fontTitle);
+			totalCars.setFont(fontValue);
+			genTime.setFont(fontValue);
+			genCar.setFont(fontValue);
+			totalCarsNo.setFont(fontValue);
+			genTimeNo.setFont(fontValue);
+			genCarNo.setFont(fontValue);
 
+			inputPane.add(inputTitle);
+			inputPane.add(totalCars);
+			inputPane.add(totalCarsNo);
+			inputPane.add(genTime);
+			inputPane.add(genTimeNo);
+			inputPane.add(genCar);
+			inputPane.add(genCarNo);
+			
+
+			inputPane.setLayout(new GridLayout(9, 1, 5, 0));
+
+			add(inputPane);
+			
+			
 			//map part
 			JPanel mapSettingPanel = new JPanel();
 			mapSettingPanel.setLayout(new GridLayout(4, 2, 5, 5));
@@ -196,7 +240,7 @@ public class SettingPanel extends JPanel{
 
 			 pauseSimulatorbtn = new JButton("Pause Simulator");
 
-			startSimulatorbtn = new JButton("Start Simulatuor");
+			startSimulatorbtn = new JButton("Start Simulator");
 			reportbtn = new JButton("Generate Report");
 
 			buttonPanel.add(pauseSimulatorbtn);
@@ -215,6 +259,7 @@ public class SettingPanel extends JPanel{
 			startSimulatorbtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Simulator.startSimulator();
+					
 					startSimulatorbtn.setEnabled(false);
 					pauseSimulatorbtn.setEnabled(true);
 
@@ -280,8 +325,18 @@ public class SettingPanel extends JPanel{
 			ctrlPane.setLayout(new GridLayout(11, 1, 5, 0));
 
 			add(ctrlPane);
+			
+			////////////////////////
+
+
 
 		}
+//		public static int getGenTime()
+//		{
+//			return Integer.parseInt(genTimeNo.getText());
+//
+//		}
+		
 		public static void disablePausebtn()
 		{
 			pauseSimulatorbtn.setEnabled(false);

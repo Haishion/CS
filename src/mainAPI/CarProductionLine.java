@@ -56,12 +56,12 @@ public class CarProductionLine {
 		this.type = FIXED;
 	}
 
-	public CarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, String[] zoneArray, int[] stuff, ShapefileDataStore dataStore)
+	public CarProductionLine(Strategy s,int producerSpeed, int noOfCarsGenerated, int expectedNo, int[] stuff, ShapefileDataStore dataStore)
 	{
 		this.noOfCarsGenerated = noOfCarsGenerated;
 		this.lastGenerationTime = 0;
 		this.producerSpeed = producerSpeed;
-		this.zoneArray = zoneArray;
+		
 
 		this.type = RANDOM;
 		this.expectedNo = expectedNo;
@@ -75,17 +75,22 @@ public class CarProductionLine {
 	 */
 	public void setCar() {
 
-
-
+		int tries = 0;
 		if(type ==RANDOM)
 		{
 			for (int i = 0; i < noOfCarsGenerated; i++) {
-				Car c =generateRandomCar(zoneArray, Timer.getClock());
+				Car c = generateRandomCar(Timer.getClock());
+				while (c == null){
+					tries++;
+					System.out.println("i'm null somehow : " + tries);
+					c = generateRandomCar(Timer.getClock());
+				}
 				Simulator.getStations().get(c.getDestination()).addMovingQueue(c);
 				
 			}
 		}
 		else if (type == FIXED) {
+			
 			Point source=Simulator.geoToCor(latitude, longitude);
 			String destination=strategy.chooseDestination(source);
 
@@ -111,11 +116,11 @@ public class CarProductionLine {
 	 * @param chargingTime
 	 * @return
 	 */
-	private  Car generateRandomCar(String[] stationZoneNoArray, int generationTime) {
+	private  Car generateRandomCar(int generationTime) {
 		Boolean error = true;
 		int errorCount=0;
 		while (error) {
-//			Point source = CarFactory.randomPointWithinZone(stationZoneNoArray);
+
 			String destination;			
 			
 			
@@ -204,6 +209,8 @@ public class CarProductionLine {
 								c.saveRoute(res);
 	//							System.out.println("success");
 								return c;
+
+								
 							}
 							
 						}
