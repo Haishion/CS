@@ -238,13 +238,13 @@ public class StationPoint extends DefaultWaypoint {
 
 	public void runningEnd() {
 		if (chargingCarNo == 0) {
-			System.out.println("*StationID is " + ID);
-			System.out.println("*End of Running");
-			System.out.println("*Busy Time Area is " + busyTimeArea);
-			System.out.println("*QueueLengthArea is " + queueLengthArea);
-			System.out.println("*Charging Queue Size is" + chargingQueue.size());
-			System.out.println("*Moving Queue Size is" + movingQueue.size());
-			System.out.println("*Waiting Queue Size is" + waitingQueue.size());
+//			System.out.println("*StationID is " + ID);
+//			System.out.println("*End of Running");
+//			System.out.println("*Busy Time Area is " + busyTimeArea);
+//			System.out.println("*QueueLengthArea is " + queueLengthArea);
+//			System.out.println("*Charging Queue Size is" + chargingQueue.size());
+//			System.out.println("*Moving Queue Size is" + movingQueue.size());
+//			System.out.println("*Waiting Queue Size is" + waitingQueue.size());
 			// Report.saveStationData(this);
 			chargingCarNo = -1;
 //			for (int i = 0; i < qt.size(); i++) {

@@ -367,7 +367,7 @@ public class Simulator extends JFrame {
 				
 				//all the cars have been generated, check if the station is end or not
 				if (!production) {
-//					stationpoint.runningEnd();
+					stationpoint.runningEnd();
 				}
 				stationpoint.updateWQLTOLE();
 				stationpoint.updateChargingTime();
