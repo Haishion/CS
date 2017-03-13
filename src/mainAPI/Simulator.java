@@ -177,7 +177,7 @@ public class Simulator extends JFrame {
 		
 	}
 /**
- * initialize the Graphhoper
+ * initialize the Graphhopper
  */
 	private void initHopper() {
 		// Point point = entry.getPoints().get(0);
@@ -372,6 +372,8 @@ public class Simulator extends JFrame {
 				stationpoint.updateWQLTOLE();
 				stationpoint.updateChargingTime();
 
+			} else {
+				stationpoint.getButton().setBackground(Color.RED);
 			}
 
 		}

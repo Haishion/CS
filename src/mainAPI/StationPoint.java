@@ -269,6 +269,7 @@ public class StationPoint extends DefaultWaypoint {
 			button = new JButton(ID);
 
 		}
+
 		button.setBackground(Color.GREEN);
 		button.setSize(width, height);
 		Dimension d = button.getPreferredSize();
