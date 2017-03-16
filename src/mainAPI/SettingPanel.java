@@ -27,7 +27,7 @@ public class SettingPanel extends JPanel{
 	private static JTextField latitudetxt = new JTextField("1.3667");
 	private static JTextField totalCarsNo = new JTextField("1000");
 	private static JTextField genTimeNo = new JTextField("5");
-	private static JTextField genCarNo = new JTextField("50");
+	private static JTextField genCarNo = new JTextField("10");
 	private static JButton reportbtn;
 	private static JButton startSimulatorbtn;
 	private static JButton pauseSimulatorbtn;

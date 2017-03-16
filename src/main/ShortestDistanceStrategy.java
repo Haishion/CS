@@ -23,9 +23,9 @@ public class ShortestDistanceStrategy extends Strategy {
 		int[] closestTwoDistance = {9999,9999}; 
 		for (String station : Simulator.getStations().keySet()) {
 //			find the 2 closest stations
-			Point des = Simulator.getStations().get(station).getPoint();
-			int y2 = (int) des.getY();
-			int x2 = (int) des.getX();
+			Point destination = Simulator.getStations().get(station).getPoint();
+			int y2 = (int) destination.getY();
+			int x2 = (int) destination.getX();
 			int x1 = (int) generationPoint.getX();
 			int y1 = (int) generationPoint.getY();
 			int distance = Math.abs(x1-x2) + Math.abs(y1-y2); 
