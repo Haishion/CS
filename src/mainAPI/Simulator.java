@@ -373,7 +373,7 @@ public class Simulator extends JFrame {
 				stationpoint.updateChargingTime();
 
 			} else {
-				stationpoint.getButton().setBackground(Color.RED);
+				stationpoint.getButton().setBackground(Color.GREEN);
 			}
 
 		}

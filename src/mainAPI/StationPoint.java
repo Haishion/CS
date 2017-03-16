@@ -270,7 +270,7 @@ public class StationPoint extends DefaultWaypoint {
 
 		}
 
-		button.setBackground(Color.GREEN);
+		button.setBackground(Color.ORANGE);
 		button.setSize(width, height);
 		Dimension d = button.getPreferredSize();
 		d.height = height;

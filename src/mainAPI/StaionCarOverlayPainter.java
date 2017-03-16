@@ -48,7 +48,7 @@ public class StaionCarOverlayPainter extends WaypointPainter<StationPoint> {
     				Car c=s.getMovingQueue().get(i);
     				
     				Point p=Simulator.geoToCor(c.getLatitude(),c.getLongtitude());
-    				Ellipse2D.Double circle = new Ellipse2D.Double(p.getX(), p.getY(), 10, 10);
+    				Ellipse2D.Double circle = new Ellipse2D.Double(p.getX(), p.getY(), 7, 7);
     				g.setColor(Color.black);
     	            g.fill(circle);
     			}
