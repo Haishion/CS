@@ -182,7 +182,7 @@ public class CarProductionLine {
 //				System.out.println(y);
 				int tries = 0;
 				destination=strategy.chooseDestination(source);
-
+				
 		        while(tries<5){
 		        	if (point1.isWithinDistance(g, 0)){
 
@@ -204,13 +204,12 @@ public class CarProductionLine {
 							GeoPosition geo2 = Simulator.corToGeo(x2, y2);
 							
 							GHResponse res = Simulator.getRoute(geo1, geo2);
+							
 							if (res != null){
 								Car c = new Car(geo1.getLatitude(), geo1.getLongitude(), destination, generationTime, chargingTime);
 								c.saveRoute(res);
 	//							System.out.println("success");
 								return c;
-
-								
 							}
 							
 						}

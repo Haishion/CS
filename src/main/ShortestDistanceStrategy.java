@@ -18,9 +18,11 @@ public class ShortestDistanceStrategy extends Strategy {
 	public String chooseDestination(Point generationPoint){
 		GHResponse shortestDistanceRes=null;
 		String selectedStation=null;
+		int waitingTime1 = 0;
+		int waitingTime2 = 0;
 		
-		String[] closestTwo = {"",""};
-		int[] closestTwoDistance = {9999,9999}; 
+		String[] closestThree = {"","",""};
+		int[] closestThreeDistance = {9999,9999,9999}; 
 		for (String station : Simulator.getStations().keySet()) {
 //			find the 2 closest stations
 			Point destination = Simulator.getStations().get(station).getPoint();
@@ -30,26 +32,31 @@ public class ShortestDistanceStrategy extends Strategy {
 			int y1 = (int) generationPoint.getY();
 			int distance = Math.abs(x1-x2) + Math.abs(y1-y2); 
 
-			if (distance <= closestTwoDistance[0]){
+			if (distance <= closestThreeDistance[0]){
 
-				closestTwoDistance[1] = closestTwoDistance[0];
-				closestTwo[1] = closestTwo[0];
-				closestTwoDistance[0] = distance;
-				closestTwo[0] = station;
-			} else if (distance <= closestTwoDistance[1]) {
+				closestThreeDistance[2] = closestThreeDistance[1];
+				closestThree[2] = closestThree[1];
+				closestThreeDistance[1] = closestThreeDistance[0];
+				closestThree[1] = closestThree[0];
+				closestThreeDistance[0] = distance;
+				closestThree[0] = station;
+			} else if (distance <= closestThreeDistance[1]) {
+				closestThreeDistance[2] = closestThreeDistance[1];
+				closestThree[2] = closestThree[1];
+				closestThreeDistance[1] = distance;
+				closestThree[1] = station;
+			} else if (distance <= closestThreeDistance[2]) {
 
-				closestTwoDistance[1] = distance;
-				closestTwo[1] = station;
+				closestThreeDistance[2] = distance;
+				closestThree[2] = station;
 			}
 		}
 		
-//		int tries = 0;
+
 		for (String myVal : Simulator.getStations().keySet()) {
 			// for the two closest stations only
-			if (myVal == closestTwo[0] || myVal == closestTwo[1]){
-//				tries++;
-//				System.out.println("i run through this part " + tries + " times!"); // somehow the result is always only 1 time =((
-//				System.out.println(myVal);
+			if (myVal == closestThree[0] || myVal == closestThree[1] || myVal == closestThree[1]){
+				
 				GHResponse res=super.getInformation(generationPoint, myVal);
 				if(res==null)
 				{
@@ -57,22 +64,29 @@ public class ShortestDistanceStrategy extends Strategy {
 				}
 				else if(shortestDistanceRes==null)
 				{
+					waitingTime1 =  Simulator.getStations().get(myVal).getWaitingSize() * 15;
+					
 					shortestDistanceRes=res;
 					selectedStation=myVal;
 					continue;
 				}
 				else
 				{
-					if(res.getDistance()<shortestDistanceRes.getDistance())
+					waitingTime2 =  Simulator.getStations().get(myVal).getWaitingSize() * 15;
+//					if(res.getTime()<shortestDistanceRes.getTime())
+					if((res.getTime()/1000/60+waitingTime2)<(shortestDistanceRes.getTime()/1000/60+waitingTime1))
 					{
+						System.out.println("Station: " + myVal);
+						System.out.println("change destination: "+ res.getTime()/1000/60 + waitingTime2 +"is less than " + shortestDistanceRes.getTime()/1000/60 + waitingTime1);
 						shortestDistanceRes=res;
 						selectedStation=myVal;
 					}
 				}
 
 			}
-
+			
 		}
+		
 		return selectedStation;		
 	}
 }

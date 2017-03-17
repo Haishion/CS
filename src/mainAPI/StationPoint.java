@@ -30,7 +30,7 @@ public class StationPoint extends DefaultWaypoint {
 	}
 
 	protected ArrayList<Car> waitingQueue = null;
-	protected ArrayList<Car> chargingQueue = null;
+	public ArrayList<Car> chargingQueue = null;
 
 	public class QueueTime {
 		private int time;
