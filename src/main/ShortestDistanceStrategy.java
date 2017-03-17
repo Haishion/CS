@@ -76,10 +76,11 @@ public class ShortestDistanceStrategy extends Strategy {
 //					if(res.getTime()<shortestDistanceRes.getTime())
 					if((res.getTime()/1000/60+waitingTime2)<(shortestDistanceRes.getTime()/1000/60+waitingTime1))
 					{
-						System.out.println("Station: " + myVal);
-						System.out.println("change destination: "+ res.getTime()/1000/60 + waitingTime2 +"is less than " + shortestDistanceRes.getTime()/1000/60 + waitingTime1);
+//						System.out.println("Station: " + myVal);
+//						System.out.println("change destination: "+ res.getTime()/1000/60 + waitingTime2 +"is less than " + shortestDistanceRes.getTime()/1000/60 + waitingTime1);
 						shortestDistanceRes=res;
 						selectedStation=myVal;
+						waitingTime1 = waitingTime2;
 					}
 				}
 
