@@ -64,7 +64,7 @@ public class ShortestDistanceStrategy extends Strategy {
 				}
 				else if(shortestDistanceRes==null)
 				{
-					waitingTime1 =  Simulator.getStations().get(myVal).getWaitingSize() * 15;
+					waitingTime1 =  Simulator.getStations().get(myVal).getWaitingSize() * 30;
 					
 					shortestDistanceRes=res;
 					selectedStation=myVal;
@@ -72,7 +72,7 @@ public class ShortestDistanceStrategy extends Strategy {
 				}
 				else
 				{
-					waitingTime2 =  Simulator.getStations().get(myVal).getWaitingSize() * 15;
+					waitingTime2 =  Simulator.getStations().get(myVal).getWaitingSize() * 30;
 //					if(res.getTime()<shortestDistanceRes.getTime())
 					if((res.getTime()/1000/60+waitingTime2)<(shortestDistanceRes.getTime()/1000/60+waitingTime1))
 					{
